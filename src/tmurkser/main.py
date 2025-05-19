@@ -15,6 +15,7 @@ class StandardWindow:
     name: str
     path: Path
 
+
 @dataclass
 class StandardSession:
     name: str
@@ -43,6 +44,7 @@ def load_config(path: Path) -> list[StandardSession]:
 
     return config
 
+
 def open_default_sessions():
     """Open default sessions in tmux.
 
@@ -66,12 +68,13 @@ def open_default_sessions():
             window_name=window.name,
         )
 
-        new_session.windows[0].active_pane.send_keys(f" cd {window.path} && clear", enter=True)
+        new_session.windows[0].active_pane.send_keys(
+            f" cd {window.path} && clear", enter=True
+        )
 
         for window in session.windows:
             new_session.new_window(
-                window_name=window.name,
-                start_directory=str(window.path)
+                window_name=window.name, start_directory=str(window.path)
             )
 
 
@@ -83,16 +86,24 @@ def main():
     parser = ArgumentParser(
         prog="tmurkser",
         description="A tmux session manager",
-        epilog="Licensed under the MIT license. (c) 2025 Simon Barth"
+        epilog="Licensed under the MIT license. (c) 2025 Simon Barth",
     )
     subparsers = parser.add_subparsers(help="commands help", dest="command")
 
     save_parser = subparsers.add_parser("save", help="Save the current sessions")
 
     target_group = save_parser.add_mutually_exclusive_group(required=True)
-    target_group.add_argument("--all", "-a", action="store_true", help="Save all current sessions")
-    target_group.add_argument("--session", nargs="*", help="Name of the session(s) to save")
-    target_group.add_argument("--exclude", nargs="*", help="Name of the session(s) to exclude. All others will be saved")
+    target_group.add_argument(
+        "--all", "-a", action="store_true", help="Save all current sessions"
+    )
+    target_group.add_argument(
+        "--session", nargs="*", help="Name of the session(s) to save"
+    )
+    target_group.add_argument(
+        "--exclude",
+        nargs="*",
+        help="Name of the session(s) to exclude. All others will be saved",
+    )
 
     parser.add_argument("--load", action="store_true", help="Load the saved sessions")
 
