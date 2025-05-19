@@ -1,0 +1,14 @@
+[[sessions]]
+name = "main"
+[[sessions.windows]]
+name = "main"
+path = "~/"
+[[sessions.windows]]
+name = "downloads"
+path = "~/Downloads"
+
+[[sessions]]
+name = "code"
+[[sessions.windows]]
+name = "code"
+path = "~/code"
