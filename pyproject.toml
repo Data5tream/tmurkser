@@ -28,5 +28,9 @@ build-backend = "hatchling.build"
 
 [dependency-groups]
 dev = [
+    "mypy>=1.15.0",
     "ruff>=0.11.10",
 ]
+
+[tool.mypy]
+files = ["src"]
