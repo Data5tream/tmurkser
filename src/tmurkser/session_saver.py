@@ -65,14 +65,16 @@ class SessionSaver:
 
             windows = AoT([])
             for window in session.windows:
-                cmd = window.active_pane.cmd(
-                    "display-message", "-p", "#{pane_current_path}"
-                )
-                if cmd.returncode == 0:
-                    path = cmd.stdout[0].strip()
-                else:
+                path = ""
+                if window.active_pane:
+                    cmd = window.active_pane.cmd(
+                        "display-message", "-p", "#{pane_current_path}"
+                    )
+                    if cmd.returncode == 0:
+                        path = cmd.stdout[0].strip()
+
+                if not path:
                     print("Failed to get the working path, defaulting to empty string")
-                    path = ""
 
                 window_object = table()
                 window_object.add("name", window.name)
